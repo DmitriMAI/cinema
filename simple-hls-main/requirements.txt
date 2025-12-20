@@ -1,0 +1,4 @@
+fastApi==0.111.0
+requests==2.28.1
+jinja2
+python-multipart
