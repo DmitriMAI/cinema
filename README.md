@@ -24,4 +24,4 @@ http://localhost:3000/
 # Номер дашборда 19268
 ```
 
-![alt text](image.png)
+![alt text](image-2.png)
