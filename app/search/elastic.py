@@ -43,19 +43,25 @@ def filter_movies(
     if name:
         query["query"]["bool"]["must"].append({
             "match": {
-                "name": name
+                "name": name,
+                "analyzer": "standard",
+                "fuzziness": "AUTO"
             }
         })
     if actors:
         query["query"]["bool"]["must"].append({
             "match": {
-                "actors": actors
+                "actors": actors,
+                "analyzer": "standard",
+                "fuzziness": "AUTO"
             }
         })
     if genre:
         query["query"]["bool"]["must"].append({
             "match": {
-                "genre": genre
+                "genre": genre,
+                "analyzer": "standard",
+                "fuzziness": "AUTO"
             }
         })
     if date:
