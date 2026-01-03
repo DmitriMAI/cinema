@@ -1,0 +1,18 @@
+{
+	"ulid": "01KE2MHYRSG2PKX9S1BR9334SN",
+	"minTime": 1765661335539,
+	"maxTime": 1765663200000,
+	"stats": {
+		"numSamples": 666004,
+		"numFloatSamples": 666004,
+		"numSeries": 605,
+		"numChunks": 4194
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01KE2MHYRSG2PKX9S1BR9334SN"
+		]
+	},
+	"version": 1
+}
