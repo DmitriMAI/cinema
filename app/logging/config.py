@@ -20,3 +20,8 @@ def setup_logging():
     root = logging.getLogger()
     root.setLevel(logging.INFO)
     root.handlers = [handler]
+    
+    for logger_name in ("uvicorn", "uvicorn.error", "uvicorn.access"):
+        logger = logging.getLogger(logger_name)
+        logger.handlers = []
+        logger.propagate = True

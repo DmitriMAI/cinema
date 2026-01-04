@@ -27,7 +27,7 @@ def get_movie_poster(name: str):
         poster = data.get("Poster", "")
 
         if not poster:
-            logger.info(
+            logger.warning(
                 "Poster не найден в ответе OMDb",
                 extra={"movie_name": name}
             )
