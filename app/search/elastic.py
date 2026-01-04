@@ -1,15 +1,19 @@
+import os
 import elasticsearch
 from typing import Optional
 
-es = elasticsearch.Elasticsearch(
-    # если оч хотим локально
-    # ["http://localhost:9200"],
-    # Для докера, либо если в одной сети
-    ["http://elasticsearch:9200"],
+ELASTICSEARCH_URL = os.getenv(
+    "ELASTICSEARCH_URL",
+    "http://elasticsearch:9200"
+)
 
-    # Хммм, сломалось
-    # ["http://0.0.0.0:9200"]
-    # Добавляем параметры для совместимости
+ELASTICSEARCH_INDEX = os.getenv(
+    "ELASTICSEARCH_INDEX",
+    "movies"
+)
+
+es = elasticsearch.Elasticsearch(
+    [ELASTICSEARCH_URL],
     verify_certs=False,
     request_timeout=30,
 )
@@ -21,8 +25,7 @@ def es_create_index_if_not_exists(es, index):
         if ex.error != 'resource_already_exists_exception':
             raise ex
 
-es_create_index_if_not_exists(es, "movies")
-
+es_create_index_if_not_exists(es, ELASTICSEARCH_INDEX)
 
 def filter_movies(
     name: Optional[str] = None,
@@ -71,5 +74,10 @@ def filter_movies(
             }
         })
 
-    res = es.search(index="movies", body=query, from_=from_, size=size)
+    res = es.search(
+        index=ELASTICSEARCH_INDEX,
+        body=query,
+        from_=from_,
+        size=size
+    )
     return res["hits"]["hits"]

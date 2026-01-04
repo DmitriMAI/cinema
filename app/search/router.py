@@ -4,7 +4,7 @@ from typing import Optional
 
 from app.search.elastic import es, filter_movies
 from app.search.metrics import SEARCH_REQUESTS, MOVIE_VIEWS
-from app.search.omdb import get_movie_poster
+from app.search.omdb_client import get_movie_poster
 from prometheus_client import generate_latest, REGISTRY
 
 router = APIRouter()
