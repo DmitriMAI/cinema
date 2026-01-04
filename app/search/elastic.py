@@ -1,16 +1,13 @@
 import os
 import elasticsearch
+import logging
 from typing import Optional
 
-ELASTICSEARCH_URL = os.getenv(
-    "ELASTICSEARCH_URL",
-    "http://elasticsearch:9200"
-)
+logger = logging.getLogger(__name__)
 
-ELASTICSEARCH_INDEX = os.getenv(
-    "ELASTICSEARCH_INDEX",
-    "movies"
-)
+ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://elasticsearch:9200")
+
+ELASTICSEARCH_INDEX = os.getenv("ELASTICSEARCH_INDEX", "movies")
 
 es = elasticsearch.Elasticsearch(
     [ELASTICSEARCH_URL],
@@ -23,7 +20,8 @@ def es_create_index_if_not_exists(es, index):
         es.indices.create(index=index)
     except elasticsearch.exceptions.RequestError as ex:
         if ex.error != 'resource_already_exists_exception':
-            raise ex
+            logger.error("Ошибка создания индекса Elasticsearch", extra={"elastic_index_name": index}, exc_info=True)
+            raise
 
 es_create_index_if_not_exists(es, ELASTICSEARCH_INDEX)
 

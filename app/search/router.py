@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import Response
 from typing import Optional
+import logging
 
 from app.search.elastic import es, filter_movies
 from app.search.metrics import SEARCH_REQUESTS, MOVIE_VIEWS
@@ -8,6 +9,8 @@ from app.search.omdb_client import get_movie_poster
 from prometheus_client import generate_latest, REGISTRY
 
 router = APIRouter()
+
+logger = logging.getLogger(__name__)
 
 @router.get("/metrics")
 async def metrics():
@@ -25,7 +28,6 @@ async def search(
     from_: int = Query(0, alias="from", ge=0),
     size: int = Query(10, ge=1, le=100)
 ):
-    print("in search")
     SEARCH_REQUESTS.inc()
 
     try:
@@ -48,9 +50,20 @@ async def search(
                 "hits": movies
             }
         }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
+    except Exception:
+        logger.error(
+            "Произошла ошибка во время поиска фильма",
+            extra={
+                "search_name": name,
+                "search_actors": actors,
+                "search_genre": genre,
+                "search_date": date,
+                "from": from_,
+                "size": size
+            },
+            exc_info=True
+        )
+        raise HTTPException(status_code=500, detail="Ошибка поиска фильма")
 
 @router.get("/poster")
 async def poster(name: str = Query(...)):
