@@ -44,7 +44,7 @@ docker compose up -d
 
 # Демонстрация работы
 > Video
-![alt text](photos/pirates.png)  
+https://github.com/user-attachments/assets/d29c9c5a-cfc9-445b-a2b5-504b43db299b 
 
 > Api search
 ![alt text](photos/pirates.png)  
