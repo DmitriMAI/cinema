@@ -11,8 +11,8 @@
 ## О чем этот проект? {#зачем-это-нужно}
 Ключевые **возможности**  
 - Поиск фильмов через **Elastic Search**
-- Преобразование видео в **HLS** формат, сохранение в *S3* хранилище.
-- Получение кусочков видео для обработки клиентом в браузере.
+- Загрузка видео файлов в **S3** с преобразованием в **HLS** формат.
+- Просмотр видео в **HLS** формате в браузере.
 - Просмотр **логов**, а также **метрик** по просмотру видео.
 
 ## Кто разработал проект?
@@ -32,16 +32,9 @@
 # Docker desktop/docker должен быть запущен
 docker build -t movie-search-backend .
 ```
-```bash
-# 2) Папки могут не иметь доступ, добавить для контейнеров.
-sudo chown -R 472:472 ./grafana_data
-sudo chmod -R u+w ./grafana_data
-
-sudo chown -R 65534:65534 ./prometheus_data
-```
 
 ```bash
-# 3) Запустить все контейнеры для работы приложения
+# 2) Запустить все контейнеры для работы приложения
 docker compose up -d
 ```
 
@@ -50,12 +43,26 @@ docker compose up -d
 [dashboards_for_grafana](dashboards_for_grafana)
 
 # Демонстрация работы
+> Video
+![alt text](photos/pirates.png)  
+
 > Api search
-![alt text](photos/search.png)  
-> Желательно добавить еще пример  
+![alt text](photos/pirates.png)  
+
+> Неявный поиск 
+![alt text](photos/genre.png)  
+
+> Upload страница
+![alt text](photos/upload.png)  
+
+> Просмотр видео
+![alt text](photos/video.png)  
+
+> Minio
+![alt text](photos/minio.png)
 
 > Prometheus
-![alt text](photos/image-2.png)  
+![alt text](photos/metrics.png)  
 
 > Loki
 ![alt text](photos/loki.png)
